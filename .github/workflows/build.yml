@@ -31,8 +31,8 @@ jobs:
         cmake -DOPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl -DCMAKE_PREFIX_PATH=/opt/homebrew ~/src/openvpn3
         cmake --build .
         mkdir dist
-        cp test/ovpncliagent ./dist
-        cp test/ovpncli ./dist
+        cp ./test/ovpncliagent ./dist
+        cp ./test/ovpncli ./dist
     
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3

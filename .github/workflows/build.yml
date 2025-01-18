@@ -1,0 +1,45 @@
+name: Build OpenVPN3
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: macos-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Install Brew (if necessary)
+      run: |
+        if ! command -v brew &> /dev/null; then
+          /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+        fi
+    
+    - name: Install CMake (if necessary)
+      run: |
+        if ! command -v cmake &> /dev/null; then
+          brew install cmake
+        fi
+
+    - name: Set up dependencies
+      run: |
+        brew install asio cmake jsoncpp lz4 openssl pkg-config xxhash
+
+    - name: Build OpenVPN3
+      run: |
+        mkdir build-openvpn3
+        cd build-openvpn3
+        cmake -DOPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl -DCMAKE_PREFIX_PATH=/opt/homebrew ~/src/openvpn3
+        cmake --build .
+
+    - name: Run tests (if applicable)
+      run: |
+        cd build
+        make test

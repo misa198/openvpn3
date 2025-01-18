@@ -3,10 +3,10 @@ name: Build OpenVPN3
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   build:
@@ -38,6 +38,12 @@ jobs:
         cd build-openvpn3
         cmake -DOPENSSL_ROOT_DIR=/opt/homebrew/opt/openssl -DCMAKE_PREFIX_PATH=/opt/homebrew ~/src/openvpn3
         cmake --build .
+    
+    - name: Upload build artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: build-openvpn3
+        path: ./build-openvpn3
 
     - name: Run tests (if applicable)
       run: |

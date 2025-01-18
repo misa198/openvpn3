@@ -32,6 +32,13 @@ jobs:
       run: |
         brew install asio cmake jsoncpp lz4 openssl pkg-config xxhash
 
+    - name: Clone code
+      run: |
+        cd ~
+        mkdir src
+        cd src
+        git clone https://github.com/misa198/openvpn3.git openvpn3
+
     - name: Build OpenVPN3
       run: |
         mkdir build-openvpn3

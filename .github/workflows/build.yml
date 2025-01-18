@@ -35,5 +35,5 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: build-openvpn3
-        path: ./build-openvpn3/test
+        path: ./build-openvpn3
 
